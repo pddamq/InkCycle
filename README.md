@@ -304,8 +304,7 @@ stages: [draft, review, revise]
 
 ## 许可证
 
-本仓库采用 **[MIT License](LICENSE)**。开源发布前请在根目录添加 `LICENSE` 文件（若尚未添加）。
-
+本仓库采用 **[MIT License](LICENSE)**。
 ---
 
 ## 相关链接
