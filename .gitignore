@@ -1,0 +1,30 @@
+# --- 本地运行数据（勿提交）---
+/data/
+
+# --- Python / backend ---
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.py[cod]
+backend/build/
+backend/dist/
+backend/*.spec
+backend/.pytest_cache/
+*.egg-info/
+
+# --- Node / frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# --- 日志 ---
+*.log
+
+# --- 编辑器 / 系统 ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.sw?

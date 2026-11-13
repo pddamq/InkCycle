@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小说创作 Agent — 本地 AI 写小说软件｜开书访谈、拆章仿写、整本自动创作</title>
+  <meta name="description" content="小说创作 Agent 是一款可打包成单文件 EXE 的本地 AI 写小说软件。开书访谈生成创作蓝图，导入成书自动拆章并解析文风，剧情流程图可视化，Agent 起草审校修订循环，支持整本自动写完。数据保存在本机，兼容 OpenAI / DeepSeek / 智谱 / Ollama。">
+  <meta name="keywords" content="AI写小说,AI小说生成器,小说创作软件,网文AI,自动写小说,本地写小说工具,开书访谈,文风仿写,剧情流程图">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="小说创作 Agent">
+  <meta name="theme-color" content="#1c1915">
+  <link rel="canonical" href="./">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231c1915'/%3E%3Cpath d='M16 18h22v4H16zm0 10h32v3H16zm0 9h28v3H16zm0 9h20v3H16z' fill='%23f3ead8'/%3E%3Cpath d='M46 14l4 18-8-3z' fill='%239a3b2f'/%3E%3C/svg%3E">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="小说创作 Agent">
+  <meta property="og:title" content="小说创作 Agent — 从创意到成稿的本地 AI 写小说工作台">
+  <meta property="og:description" content="开书访谈、导入拆章、文风仿写、剧情流程图、整本自动创作。单文件 EXE，数据本地保存，接入任意 OpenAI 兼容接口。">
+  <meta property="og:url" content="./">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="小说创作 Agent — 本地 AI 写小说软件">
+  <meta name="twitter:description" content="开书访谈到整本完稿。拆章、解析文风、画流程图，一键仿写。绿色便携 EXE。">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "#website",
+        "name": "小说创作 Agent",
+        "alternateName": ["NovelAgent", "AI小说创作工具"],
+        "inLanguage": "zh-CN",
+        "description": "本地运行的 AI 小说创作桌面软件，覆盖开书访谈、导入仿写、分章写作与整本自动创作。"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "小说创作 Agent",
+        "applicationCategory": "DesignApplication",
+        "applicationSubCategory": "AI 写作 / 小说创作",
+        "operatingSystem": "Windows",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+        "featureList": [
+          "开书盘问式访谈与创作蓝图",
+          "导入 txt/md 自动拆章、解析文风、一键仿写",
+          "世界观、角色卡、卷章大纲",
+          "起草-审校-修订 Agent 循环",
+          "剧情流程图与伏笔时间线",
+          "整本后台自动创作",
+          "Skills 与 MCP 扩展",
+          "TXT / Markdown 导出",
+          "单文件 EXE，数据保存在本地"
+        ],
+        "inLanguage": "zh-CN"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "小说创作 Agent 是在线 AI 写小说网站吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不是。它是 Windows 桌面软件，双击 NovelAgent.exe 即可使用。作品、设定与 API Key 保存在本机 SQLite，不会上传到我们的服务器。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "需要什么模型才能写小说？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "任意 OpenAI 兼容接口：OpenAI、DeepSeek、智谱 GLM、本地 Ollama 等。在设置中填写 Base URL 与 API Key 后即可创作。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "导入别人的小说可以一键仿写吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "可以导入 txt/md，自动拆章、解析文风并画出剧情流程图。一键仿写会新建作品，只带入文风、角色与章节骨架，不复制原文，并按原创纪律生成新稿。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "整本自动写完会中途丢掉进度吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不会。整本创作在后台逐章运行，进度写入本地数据库。离开页面、最小化或重启后，可以从未完成章节继续写。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --ink: #1c1915;
+      --ink-2: #3f3a34;
+      --muted: #6b645b;
+      --paper: #f4efe4;
+      --paper-2: #fffdf8;
+      --line: #ddd4c4;
+      --cinnabar: #9a3b2f;
+      --cinnabar-2: #7c2e25;
+      --pine: #2f4a40;
+      --gold: #c4a46a;
+      --shadow: 0 18px 50px rgba(28, 25, 21, 0.08);
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 16px/1.75 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    }
+    a { color: var(--cinnabar); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: var(--cinnabar-2); }
+    img { max-width: 100%; }
+    .skip {
+      position: absolute; left: -999px; top: 0; background: var(--ink); color: #fff; padding: 8px 12px;
+    }
+    .skip:focus { left: 12px; z-index: 20; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    header.site {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(244, 239, 228, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      display: flex; align-items: center; gap: 20px;
+      min-height: 64px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-weight: 700; }
+    .mark {
+      width: 34px; height: 34px; border-radius: 9px; background: var(--ink); color: var(--paper);
+      display: grid; place-items: center; font-family: "Songti SC", "STSong", serif; font-size: 18px;
+    }
+    nav.links { display: flex; gap: 18px; flex-wrap: wrap; margin-left: auto; }
+    nav.links a { color: var(--ink-2); text-decoration: none; font-size: 14px; }
+    nav.links a:hover { color: var(--cinnabar); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 999px; padding: 11px 20px; font-weight: 600; text-decoration: none;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--cinnabar); color: #fff; }
+    .btn-primary:hover { background: var(--cinnabar-2); color: #fff; }
+    .btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
+    .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+    .hero { padding: 72px 0 56px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+    .eyebrow {
+      letter-spacing: 0.18em; font-size: 12px; color: var(--cinnabar); text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    h1 {
+      font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", "STSong", serif;
+      font-size: clamp(34px, 5vw, 56px); line-height: 1.2; margin: 0 0 18px; font-weight: 700;
+    }
+    .lead { font-size: 18px; color: var(--ink-2); margin: 0 0 28px; max-width: 38em; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-note { margin-top: 18px; color: var(--muted); font-size: 13px; }
+    .stage {
+      background: var(--paper-2); border: 1px solid var(--line); border-radius: 20px;
+      box-shadow: var(--shadow); padding: 22px; min-height: 360px;
+    }
+    .stage-bar { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+    .lane { display: flex; gap: 10px; margin-bottom: 14px; align-items: stretch; }
+    .vol {
+      writing-mode: vertical-rl; background: var(--pine); color: #f3ead8;
+      border-radius: 8px; padding: 10px 6px; font-size: 12px; letter-spacing: 0.2em;
+    }
+    .card {
+      flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+    }
+    .card b { display: block; font-size: 14px; }
+    .card span { color: var(--muted); font-size: 12px; }
+    .arc { height: 36px; border: 1.5px dashed var(--cinnabar); border-bottom: 0; border-radius: 18px 18px 0 0; margin: 6px 28px 0; opacity: 0.7; }
+    section { padding: 72px 0; }
+    section.alt { background: #efe8d8; }
+    h2 {
+      font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC", serif;
+      font-size: clamp(26px, 3vw, 36px); line-height: 1.3; margin: 0 0 12px;
+    }
+    .sub { color: var(--ink-2); max-width: 46em; margin: 0 0 32px; }
+    .grid-3, .grid-4, .steps { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .tile {
+      background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px; padding: 22px;
+    }
+    .tile h3 { margin: 0 0 8px; font-size: 18px; }
+    .tile p { margin: 0; color: var(--ink-2); font-size: 14px; }
+    .num {
+      width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper);
+      display: grid; place-items: center; font-size: 13px; font-weight: 700; margin-bottom: 12px;
+    }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .list { margin: 0; padding: 0; list-style: none; }
+    .list li { padding: 10px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+    .list strong { color: var(--ink); }
+    .faq details {
+      background: var(--paper-2); border: 1px solid var(--line); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 10px;
+    }
+    .faq summary { cursor: pointer; font-weight: 650; }
+    .faq p { margin: 10px 0 0; color: var(--ink-2); }
+    footer.site {
+      border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted); font-size: 13px;
+    }
+    .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    @media (max-width: 860px) {
+      .hero-grid, .grid-3, .grid-4, .split { grid-template-columns: 1fr; }
+      nav.links { display: none; }
+      .hero { padding-top: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+
+  <header class="site">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="小说创作 Agent 首页">
+        <span class="mark" aria-hidden="true">卷</span>
+        <span>小说创作 Agent</span>
+      </a>
+      <nav class="links" aria-label="页面栏目">
+        <a href="#features">功能</a>
+        <a href="#workflow">创作流程</a>
+        <a href="#import">导入仿写</a>
+        <a href="#privacy">本地与模型</a>
+        <a href="#faq">常见问题</a>
+        <a href="#download">获取软件</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Local-first novel studio</p>
+          <h1>从一句创意，<br>写到整本完稿。</h1>
+          <p class="lead">
+            小说创作 Agent 是面向网文与长篇小说作者的<strong>本地 AI 写小说软件</strong>。
+            开书先访谈，导入成书能拆章、解析文风、画出剧情流程图；写作时由 Agent 起草、审校、修订，也可后台把整本书写完。
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#download">获取单文件 EXE</a>
+            <a class="btn btn-ghost" href="#workflow">看完整工作流</a>
+          </div>
+          <p class="hero-note">Windows 绿色便携 · 数据存本机 · 兼容 OpenAI / DeepSeek / 智谱 / Ollama</p>
+        </div>
+        <aside class="stage" aria-label="剧情流程图示意">
+          <div class="stage-bar"><span>剧情流程图</span><span>卷一 · 伏笔弧线</span></div>
+          <div class="lane">
+            <div class="vol">卷一</div>
+            <div class="card"><b>雨夜当铺</b><span>已完稿 · 2480 字</span></div>
+            <div class="card"><b>小秤不撒谎</b><span>审校中 · 伏笔 +1</span></div>
+            <div class="card"><b>天平倾斜</b><span>待写 · 章末留钩</span></div>
+          </div>
+          <div class="arc" aria-hidden="true"></div>
+          <p class="hero-note" style="margin:10px 8px 0">卷泳道、顺序流与伏笔回收弧：导入分析后自动生成，写作过程中持续更新。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="features" class="alt">
+      <div class="wrap">
+        <h2>为长篇准备的功能，而不是一段聊天框</h2>
+        <p class="sub">设定、角色、大纲、正文、伏笔与时间线在同一部作品里互相校验。模型负责写，软件负责记住全书，避免前后矛盾。</p>
+        <div class="grid-3">
+          <article class="tile">
+            <h3>开书访谈</h3>
+            <p>像编辑一样多轮追问主题、类型、主角、冲突、世界规则与雷点，汇编成可编辑的创作蓝图，再驱动设定、角色与大纲生成。</p>
+          </article>
+          <article class="tile">
+            <h3>导入 · 拆章 · 仿写</h3>
+            <p>上传或粘贴 txt / md，按第 X 章、第 X 卷自动拆章；抽样解析文风；抽出角色、伏笔与时间线。一键仿写只借节奏与文风，写原创句子。</p>
+          </article>
+          <article class="tile">
+            <h3>Agent 审校循环</h3>
+            <p>起草后对照世界观、人物卡、前文、伏笔台账打分；未达标则按意见修订，直到达到你设定的分数或轮数上限。</p>
+          </article>
+          <article class="tile">
+            <h3>剧情流程图</h3>
+            <p>卷泳道 + 章节卡片，显示状态、字数、出场人物与伏笔徽标；顺序流、回收弧与未回收节点可缩放、筛选并跳进编辑器。</p>
+          </article>
+          <article class="tile">
+            <h3>整本自动创作</h3>
+            <p>后台逐章走完起草—审校—修订。靠章节摘要维持连贯，进度持久化，中断后从未完成的章节继续，支持优雅停止。</p>
+          </article>
+          <article class="tile">
+            <h3>Skills 与 MCP</h3>
+            <p>安装 SKILL.md 写作技巧，按阶段注入提示词；连接 MCP 工具服务器，把外部检索或资料能力交给写作 Agent。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="wrap">
+        <h2>一条从空白到成书的路径</h2>
+        <p class="sub">你可以访谈开书，也可以先导入一部参考作。两条路径最后都进入同一套书架、编辑器与整本创作。</p>
+        <div class="steps grid-4">
+          <article class="tile"><div class="num">1</div><h3>收集意图</h3><p>开书访谈覆盖定位、世界、人物、情节、文风与边界；或导入成书，自动得到章节与文风档案。</p></article>
+          <article class="tile"><div class="num">2</div><h3>生成骨架</h3><p>蓝图驱动世界观小节、角色卡与卷章大纲。导入路径则补摘要、伏笔与时间线，并生成流程图。</p></article>
+          <article class="tile"><div class="num">3</div><h3>分章写作</h3><p>按梗概起草，工具查询前文与设定；新伏笔与关键事件可写入台账。版本可预览、对比、回滚。</p></article>
+          <article class="tile"><div class="num">4</div><h3>审校与完本</h3><p>自动循环直到达标，或一键整本创作。导出 TXT / Markdown，范围可以是整本、单卷或单章。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="import" class="alt">
+      <div class="wrap split">
+        <div>
+          <h2>把书导进来，看见结构，再按文风开写</h2>
+          <p class="sub">适合研究对标作品、整理旧稿，或把喜欢的节奏变成自己的新故事。原文会单独保存并标记完成，不会被整本创作覆盖。</p>
+          <ol class="list">
+            <li><strong>识别章节：</strong>第 X 章 / 第 X 卷 / Chapter N / 楔子 / 番外；没有标题则按篇幅切块。</li>
+            <li><strong>文风档案：</strong>抽样开头、中段、结尾，归纳视角、节奏、句式、对话与用词。</li>
+            <li><strong>结构入图：</strong>摘要、角色、伏笔与时间线写入数据库，流程图立刻可看。</li>
+            <li><strong>一键仿写：</strong>新建作品，带入文风与章节骨架，不复制原句，启动整本创作。</li>
+          </ol>
+        </div>
+        <aside class="tile">
+          <h3>写作时会查、也会记</h3>
+          <p>起草与修订可调用角色、设定、前文搜索、未回收伏笔、时间线与邻章衔接；写完可登记伏笔、回收伏笔、记下时间线事件。审校阶段只读查询，先核实再下结论。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap split">
+        <div>
+          <h2>软件在你电脑上，模型由你指定</h2>
+          <p class="sub">NovelAgent.exe 拷到任意目录就能跑。作品与 API 设置默认保存在本机 <code>%APPDATA%\NovelAgent\</code>，重装 exe 不会丢失；需要便携模式可设环境变量 <code>NOVEL_AGENT_DATA</code>。</p>
+        </div>
+        <ul class="list">
+          <li><strong>没有强制云端账号。</strong>作品不经过我们的服务器。</li>
+          <li><strong>API Key 只存在本地。</strong>请求只发往你在设置里填写的 OpenAI 兼容地址。</li>
+          <li><strong>未配置 Key 时 AI 功能不可用。</strong>请先完成连接测试再开写。</li>
+          <li><strong>扩展可装可卸。</strong>Skills 支持文件夹、zip 与 GitHub；MCP 支持 stdio 与 HTTP。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="alt">
+      <div class="wrap">
+        <h2>常见问题</h2>
+        <p class="sub">购买或部署前可以先看这四条。页面里的说明与软件实际行为一致。</p>
+        <div class="faq">
+          <details>
+            <summary>小说创作 Agent 是在线 AI 写小说网站吗？</summary>
+            <p>不是。它是 Windows 桌面软件，双击 NovelAgent.exe 即可使用。作品、设定与 API Key 保存在本机 SQLite，不会上传到我们的服务器。</p>
+          </details>
+          <details>
+            <summary>需要什么模型才能写小说？</summary>
+            <p>任意 OpenAI 兼容接口：OpenAI、DeepSeek、智谱 GLM、本地 Ollama 等。在设置中填写 Base URL 与 API Key 后即可创作。</p>
+          </details>
+          <details>
+            <summary>导入别人的小说可以一键仿写吗？</summary>
+            <p>可以导入 txt/md，自动拆章、解析文风并画出剧情流程图。一键仿写会新建作品，只带入文风、角色与章节骨架，不复制原文，并按原创纪律生成新稿。请自行确保你有权使用被导入的文本。</p>
+          </details>
+          <details>
+            <summary>整本自动写完会中途丢掉进度吗？</summary>
+            <p>不会。整本创作在后台逐章运行，进度写入本地数据库。离开页面、最小化或重启后，可以从未完成章节继续写。</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="wrap">
+        <h2>获取小说创作 Agent</h2>
+        <p class="sub">当前以可分发的 Windows 单文件为主。把 <code>NovelAgent.exe</code> 放到任意目录，双击启动，在「设置」里填入你的模型接口。</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="../backend/dist/NovelAgent.exe">下载 NovelAgent.exe</a>
+          <a class="btn btn-ghost" href="../README.md">阅读使用说明</a>
+        </div>
+        <p class="hero-note">若链接在托管环境中不可用，请使用你打包输出的 <code>backend/dist/NovelAgent.exe</code>。开发者可在仓库中用 pnpm 构建前端，再用打包脚本生成 EXE。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap foot">
+      <div>
+        <strong>小说创作 Agent</strong>
+        <div>本地 AI 小说创作工作台 · 开书访谈 / 导入仿写 / 整本完稿</div>
+      </div>
+      <div>© <span id="y"></span> 小说创作 Agent. 作品与密钥仅保存在用户本机。</div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
